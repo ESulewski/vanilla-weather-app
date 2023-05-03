@@ -40,6 +40,13 @@ function formatTime() {
   return `${hours}:${minutes}`;
 }
 
+function displayCityTemperature(response){
+let cityElement = document.querySelector("#city");
+cityElement.innerHTML = `${query}`;
+let temperatureElement = document.querySelector("#temperature");
+temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+}
+
 let dayElement = document.querySelector("#current-day");
 dayElement.innerHTML = formatDay();
 
@@ -48,3 +55,9 @@ dateElement.innerHTML = formatCurrentDate();
 
 let timeElement = document.querySelector("#current-time");
 timeElement.innerHTML = formatTime();
+
+let query = "Toms River";
+let apiKey = "3a83dea443off10fb38c9ftb1fed0ac5";
+let cityUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}&units=metric`;
+axios.get(cityUrl).then(displayCityTemperature);
+
