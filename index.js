@@ -1,14 +1,12 @@
-function formatDate(timestamp){
-let dayElement = document.querySelector("#current-day");
-let dateElement = document.querySelector("#current-date");
-let timeElement = document.querySelector("#current-time");
-let date = new Date(timestamp);
-let hours = date.getHours();
-let minutes = date.getMinutes();
-let year = date.getFullYear();
-let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-let day = days[today.getDay()];
-let months = [
+function formatDay(){
+let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+let now = new Date();
+let day = days[now.getDay()];
+return (`${day}`);
+}
+
+function formatCurrentDate(){
+  let months = [
   "Jan",
   "Feb",
   "Mar",
@@ -22,10 +20,31 @@ let months = [
   "Nov",
   "Dec"
 ];
-let month = months[today.getMonth()];
-dayElement.innerHTML = (`${day}`);
-timeElement.innerHTML = (`${hours}:${minutes}`);
-dateElement.innerHTML = (`${month} ${day}, ${year}`);
+let now = new Date();
+let date = now.getDate();
+let year = now.getFullYear();
+let month = months[now.getMonth()];
+return `${month} ${date}, ${year}`;
 }
-let dateTimeElement = document.querySelector("#date");
-dateTimeElement.innerHTML = formatDate(response.data.dt*1000);
+
+function formatTime() {
+  let now = new Date();
+  let hours = now.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = now.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  return `${hours}:${minutes}`;
+}
+
+let dayElement = document.querySelector("#current-day");
+dayElement.innerHTML = formatDay();
+
+let dateElement = document.querySelector("#current-date");
+dateElement.innerHTML = formatCurrentDate();
+
+let timeElement = document.querySelector("#current-time");
+timeElement.innerHTML = formatTime();
