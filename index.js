@@ -40,6 +40,10 @@ function formatTime() {
   return `${hours}:${minutes}`;
 }
 
+function displayFeelsEmoji(){
+  
+}
+
 function displayCityTemperature(response){
 let cityElement = document.querySelector("#city");
 cityElement.innerHTML = `${query}`;
@@ -51,6 +55,12 @@ let iconElement = document.querySelector("#icon");
 iconElement.innerHTML = response.data.condition.icon_url;
 let windElement = document.querySelector("#wind-speed");
 windElement.innerHTML = Math.round(response.data.wind.speed);
+let humidityElement = document.querySelector("#humidity");
+humidityElement.innerHTML = response.data.temperature.humidity;
+let feelsElement = document.querySelector("#feels");
+feelsElement.innerHTML = Math.round(response.data.temerature.feels_like);
+let feelsEmojiElement = document.querySelector("#feels-emoji");
+feelsEmojiElement.innerHTML = displayFeelsEmoji();
 }
 
 let dayElement = document.querySelector("#current-day");
