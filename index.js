@@ -49,6 +49,8 @@ let weatherDescriptionElement= document.querySelector("#weather-description");
 weatherDescriptionElement.innerHTML = response.data.condition.description;
 let iconElement = document.querySelector("#icon");
 iconElement.innerHTML = response.data.condition.icon_url;
+let windElement = document.querySelector("#wind-speed");
+windElement.innerHTML = Math.round(response.data.wind.speed);
 }
 
 let dayElement = document.querySelector("#current-day");
