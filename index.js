@@ -40,8 +40,17 @@ function formatTime() {
   return `${hours}:${minutes}`;
 }
 
-function displayFeelsEmoji(){
-  
+function displayFeelsEmoji(response) {
+  let feelsLikeEmoji = document.querySelector("#feels-emoji");
+  let feelsLikeElement = document.querySelector("#feels");
+  feelsLikeElement.innerHTML  = Math.round(response.data.temperature.feels_like);
+  if (feelsLikeElement < 10) {
+    feelsLikeEmoji.innerHTML = "☃";
+  } else if (feelsLikeElement >= 10 && feelsLikeElement < 25) {
+    feelsLikeEmoji.innerHTML = "🙂" ;
+  } else {
+    feelsLikeEmoji.innerHTML = "🏝";
+  }
 }
 
 function displayCityTemperature(response){
@@ -57,10 +66,7 @@ let windElement = document.querySelector("#wind-speed");
 windElement.innerHTML = Math.round(response.data.wind.speed);
 let humidityElement = document.querySelector("#humidity");
 humidityElement.innerHTML = response.data.temperature.humidity;
-let feelsElement = document.querySelector("#feels");
-feelsElement.innerHTML = Math.round(response.data.temerature.feels_like);
-let feelsEmojiElement = document.querySelector("#feels-emoji");
-feelsEmojiElement.innerHTML = displayFeelsEmoji();
+displayFeelsEmoji(response);
 }
 
 let dayElement = document.querySelector("#current-day");
@@ -72,7 +78,7 @@ dateElement.innerHTML = formatCurrentDate();
 let timeElement = document.querySelector("#current-time");
 timeElement.innerHTML = formatTime();
 
-let query = "New York";
+let query = "Miami";
 let apiKey = "3a83dea443off10fb38c9ftb1fed0ac5";
 let cityUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}&units=metric`;
 axios.get(cityUrl).then(displayCityTemperature);
