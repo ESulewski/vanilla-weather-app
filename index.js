@@ -5,6 +5,14 @@ let day = days[now.getDay()];
 return (`${day}`);
 }
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  return days[day];
+}
+
 function formatCurrentDate(){
   let months = [
   "Jan",
@@ -40,15 +48,21 @@ function formatTime() {
   return `${hours}:${minutes}`;
 }
 
-<<<<<<< HEAD
+
+
 function displayForecast(response){
   let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index){
     if (index < 6){
-      forecastHTML = forecast + `<div class="col-2 forecast">
-      <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${forecastDay.condition.icon}.png" alt="" />
+      forecastHTML = 
+      forecastHTML + 
+      `
+      <div class="col-2 forecast">;
+      <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+                forecastDay.condition.icon_url
+              }.png" alt="" />
       <p class="forecast-temp">
                 <span id="max-temperature-forecast">${Math.round(
                   forecastDay.temperature.minimum
@@ -65,8 +79,6 @@ function displayForecast(response){
   forecastElement.innerHTML = forecastHTML;
 }
 
-=======
->>>>>>> acb39f5e90fd4b301a59fb9a5c9207a6e95fe2a2
 function displayFeelsEmoji(response) {
   let feelsLikeEmoji = document.querySelector("#feels-emoji");
   let feelsLikeElement = document.querySelector("#feels");
@@ -94,12 +106,9 @@ windElement.innerHTML = Math.round(response.data.wind.speed);
 let humidityElement = document.querySelector("#humidity");
 humidityElement.innerHTML = response.data.temperature.humidity;
 displayFeelsEmoji(response);
-<<<<<<< HEAD
 
 let forecastURL = `https://api.shecodes.io/weather/v1/forecast?query=${query}&key=${apiKey}&units=metric`;
 axios.get(forecastURL).then(displayForecast);
-=======
->>>>>>> acb39f5e90fd4b301a59fb9a5c9207a6e95fe2a2
 }
 
 let dayElement = document.querySelector("#current-day");
@@ -111,11 +120,8 @@ dateElement.innerHTML = formatCurrentDate();
 let timeElement = document.querySelector("#current-time");
 timeElement.innerHTML = formatTime();
 
-let query = "Miami";
-<<<<<<< HEAD
+let query = "Toms River";
 
-=======
->>>>>>> acb39f5e90fd4b301a59fb9a5c9207a6e95fe2a2
 let apiKey = "3a83dea443off10fb38c9ftb1fed0ac5";
 let cityUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}&units=metric`;
 axios.get(cityUrl).then(displayCityTemperature);
