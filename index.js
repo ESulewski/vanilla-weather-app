@@ -67,6 +67,7 @@ let windElement = document.querySelector("#wind-speed");
 windElement.innerHTML = Math.round(response.data.wind.speed);
 let humidityElement = document.querySelector("#humidity");
 humidityElement.innerHTML = response.data.temperature.humidity;
+celsiusTemperature = response.data.temperature.current;
 displayFeelsEmoji(response);
 
 }
@@ -83,6 +84,19 @@ function handleSearch(event){
   search(query.value);
 }
 
+function displayFahrenheitTemperature(event){
+  event.preventDefault();
+let temperatureElement = document.querySelector("#temperature");
+let fahrenheitTemperature = (celsiusTemperature * 9/5) + 32;
+temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+}
+
+function displayCelsiusTemperature(event){
+  event.preventDefault();
+let temperatureElement = document.querySelector("#temperature")
+temperatureElement.innerHTML = Math.round(celsiusTemperature);
+}
+
 let dayElement = document.querySelector("#current-day");
 dayElement.innerHTML = formatDay();
 
@@ -92,9 +106,17 @@ dateElement.innerHTML = formatCurrentDate();
 let timeElement = document.querySelector("#current-time");
 timeElement.innerHTML = formatTime();
 
-let query = "Toms River";
-
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSearch);
 
+let celsiusTemperature = null;
+
+let fahrenheitLinkElement = document.querySelector("#fahrenheit-Link");
+fahrenheitLinkElement.addEventListener("click", displayFahrenheitTemperature);
+
+
+let fahrenheitTemperature = null;
+
+let celsiusLinkElement = document.querySelector("#celsius-link");
+celsiusLinkElement.addEventListener("click", displayCelsiusTemperature);
 search("Toms River");
