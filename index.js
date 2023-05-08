@@ -86,15 +86,23 @@ function handleSearch(event){
 
 function displayFahrenheitTemperature(event){
   event.preventDefault();
+
 let temperatureElement = document.querySelector("#temperature");
 let fahrenheitTemperature = (celsiusTemperature * 9/5) + 32;
 temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+
+celsiusLinkElement.classList.remove("active");
+fahrenheitLinkElement.classList.add("active");
 }
 
 function displayCelsiusTemperature(event){
   event.preventDefault();
+
 let temperatureElement = document.querySelector("#temperature")
 temperatureElement.innerHTML = Math.round(celsiusTemperature);
+
+fahrenheitLinkElement.classList.remove("active");
+celsiusLinkElement.classList.add("active");
 }
 
 let dayElement = document.querySelector("#current-day");
