@@ -59,4 +59,10 @@ footer {
   cursor: default;
   text-decoration: none;
 }
-
+.forecast {
+  margin-left: 20px;
+  text-align: center;
+}
+.forecast-day {
+  font-size: 13px;
+}
