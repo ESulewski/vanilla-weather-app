@@ -5,6 +5,14 @@ let day = days[now.getDay()];
 return (`${day}`);
 }
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  return days[day];
+}
+
 function formatCurrentDate(){
   let months = [
   "Jan",
@@ -40,14 +48,21 @@ function formatTime() {
   return `${hours}:${minutes}`;
 }
 
+
+
 function displayForecast(response){
   let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index){
     if (index < 6){
-      forecastHTML = forecast + `<div class="col-2 forecast">
-      <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${forecastDay.condition.icon}.png" alt="" />
+      forecastHTML = 
+      forecastHTML + 
+      `
+      <div class="col-2 forecast">;
+      <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+                forecastDay.condition.icon_url
+              }.png" alt="" />
       <p class="forecast-temp">
                 <span id="max-temperature-forecast">${Math.round(
                   forecastDay.temperature.minimum
@@ -105,7 +120,7 @@ dateElement.innerHTML = formatCurrentDate();
 let timeElement = document.querySelector("#current-time");
 timeElement.innerHTML = formatTime();
 
-let query = "Miami";
+let query = "Toms River";
 
 let apiKey = "3a83dea443off10fb38c9ftb1fed0ac5";
 let cityUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}&units=metric`;
