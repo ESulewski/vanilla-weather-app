@@ -15,7 +15,7 @@ body.row {
 img{
   width: 100%;
 }
-p::first-letter{
+p:first-letter{
 text-transform: capitalize;
 }
 .search-form {
@@ -60,7 +60,8 @@ footer {
   text-decoration: none;
 }
 .forecast {
-  margin-left: 20px;
+  display: block;
+  margin: 0;
   text-align: center;
 }
 .forecast-day {

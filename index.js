@@ -41,23 +41,39 @@ function formatTime() {
   return `${hours}:${minutes}`;
 }
 
-function displayForecast(){
+function displayForecast(response) {
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = `<div class="row">`;
-  let days = ["Thursday", "Friday", "Saturday", "Sunday"];
-  days.forEach(function (day){
-  forecastHTML = 
-    forecastHTML +
-    `
-    <div class="col-2">
-      <span class="forecast-icon"><img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png" alt="few clouds"></span>
-      <span class="forecast-temperature">14°C | 20°C</span>
-      <span class="forecast-day">${day}</span>
-    </div>
-   `;
-   })
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `
+            <div class="col-2 forecast">
+              <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+                forecastDay.condition.icon
+              }.png" alt="" />
+              <p class="forecast-temp">
+                <span id="max-temperature-forecast">${Math.round(
+                  forecastDay.temperature.minimum
+                )}</span>
+                °C | <span id="min-temperature-forecast">${Math.round(
+                  forecastDay.temperature.maximum
+                )}</span> °C
+              </p>
+              <p class="forecast-day">${formatDay(forecastDay.time)}</p>
+            </div>`;
+    }
+  });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(city){
+let apiKey = "3a83dea443off10fb38c9ftb1fed0ac5";
+let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+axios.get(apiUrl).then(displayForecast);
 }
 
 function displayFeelsEmoji(response) {
@@ -71,24 +87,37 @@ function displayFeelsEmoji(response) {
   } else {
     feelsLikeEmoji.innerHTML = "🏝";
   }
+
 }
 
 function displayCityTemperature(response){
 let cityElement = document.querySelector("#city");
 cityElement.innerHTML = response.data.city;
+
 let temperatureElement = document.querySelector("#temperature");
 temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+
 let weatherDescriptionElement= document.querySelector("#weather-description");
 weatherDescriptionElement.innerHTML = response.data.condition.description;
+
 let iconElement = document.querySelector("#icon");
-iconElement.innerHTML = response.data.condition.icon_url;
+iconElement.setAttribute(
+  "src",
+  `https://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
+);
+iconElement.setAttribute("alt", response.data.condition.icon);
+
 let windElement = document.querySelector("#wind-speed");
 windElement.innerHTML = Math.round(response.data.wind.speed);
+
 let humidityElement = document.querySelector("#humidity");
 humidityElement.innerHTML = response.data.temperature.humidity;
+
 celsiusTemperature = response.data.temperature.current;
+
 displayFeelsEmoji(response);
 
+getForecast(response.data.city);
 }
 
 function search(query){
@@ -147,4 +176,3 @@ let fahrenheitTemperature = null;
 let celsiusLinkElement = document.querySelector("#celsius-link");
 celsiusLinkElement.addEventListener("click", displayCelsiusTemperature);
 search("Toms River");
-displayForecast();
