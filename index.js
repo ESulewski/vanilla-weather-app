@@ -41,6 +41,25 @@ function formatTime() {
   return `${hours}:${minutes}`;
 }
 
+function displayForecast(){
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+  let days = ["Thursday", "Friday", "Saturday", "Sunday"];
+  days.forEach(function (day){
+  forecastHTML = 
+    forecastHTML +
+    `
+    <div class="col-2">
+      <span class="forecast-icon"><img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png" alt="few clouds"></span>
+      <span class="forecast-temperature">14°C | 20°C</span>
+      <span class="forecast-day">${day}</span>
+    </div>
+   `;
+   })
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function displayFeelsEmoji(response) {
   let feelsLikeEmoji = document.querySelector("#feels-emoji");
   let feelsLikeElement = document.querySelector("#feels");
@@ -128,3 +147,4 @@ let fahrenheitTemperature = null;
 let celsiusLinkElement = document.querySelector("#celsius-link");
 celsiusLinkElement.addEventListener("click", displayCelsiusTemperature);
 search("Toms River");
+displayForecast();
