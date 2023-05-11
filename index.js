@@ -28,51 +28,67 @@ let month = months[now.getMonth()];
 return `${month} ${date}, ${year}`;
 }
 
-function formatTime() {
+function formatTime(){
   let now = new Date();
   let hours = now.getHours();
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
   let minutes = now.getMinutes();
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  return `${hours}:${minutes}`;
+  let AmOrPm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = `hours ? hours}:12;
+  minutes = minutes <10 ? '0'+ minutes : minutes;
+  let time = hours + ":" + minutes
++ " " + AmorPm}'
+return ${time};
 }
 
-function displayForecast(response) {
+function forecastDate(timestamp){
+    let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  return days[day];
+}
+
+
+function showForecast(response) {
   let forecast = response.data.daily;
+
   let forecastElement = document.querySelector("#forecast");
+
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index) {
     if (index < 6) {
       forecastHTML =
         forecastHTML +
         `
-            <div class="col-2 forecast">
+            <div class="col-2">
+
               <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
                 forecastDay.condition.icon
-              }.png" alt="" />
+              }.png" alt="" />;
+
               <p class="forecast-temp">
                 <span id="max-temperature-forecast">${Math.round(
                   forecastDay.temperature.minimum
                 )}</span>
-                °C | <span id="min-temperature-forecast">${Math.round(
+                °F | <span id="min-temperature-forecast">${Math.round(
                   forecastDay.temperature.maximum
-                )}</span> °C
-              </p>
-              <p class="forecast-day">${formatDay(forecastDay.time)}</p>
+                )}</span> °F
+              </p>;
+
+              <p class="forecast-day">${forcastDate(forecastDay.time)}</p>;
             </div>`;
-    }
+    };
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
 }
 
+
+
 function getForecast(city){
 let apiKey = "3a83dea443off10fb38c9ftb1fed0ac5";
-let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=imperial`;
 axios.get(apiUrl).then(displayForecast);
 }
 
@@ -113,44 +129,21 @@ windElement.innerHTML = Math.round(response.data.wind.speed);
 let humidityElement = document.querySelector("#humidity");
 humidityElement.innerHTML = response.data.temperature.humidity;
 
-celsiusTemperature = response.data.temperature.current;
-
 displayFeelsEmoji(response);
 
 getForecast(response.data.city);
 }
 
-function search(query){
+function search(city){
 let apiKey = "3a83dea443off10fb38c9ftb1fed0ac5";
-let cityUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}&units=metric`;
+let cityUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
 axios.get(cityUrl).then(displayCityTemperature);
 }
 
 function handleSearch(event){
   event.preventDefault();
-  let query = document.querySelector("#search-field-form");
-  search(query.value);
-}
-
-function displayFahrenheitTemperature(event){
-  event.preventDefault();
-
-let temperatureElement = document.querySelector("#temperature");
-let fahrenheitTemperature = (celsiusTemperature * 9/5) + 32;
-temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
-
-celsiusLinkElement.classList.remove("active");
-fahrenheitLinkElement.classList.add("active");
-}
-
-function displayCelsiusTemperature(event){
-  event.preventDefault();
-
-let temperatureElement = document.querySelector("#temperature")
-temperatureElement.innerHTML = Math.round(celsiusTemperature);
-
-fahrenheitLinkElement.classList.remove("active");
-celsiusLinkElement.classList.add("active");
+  let city = document.querySelector("#search-field-form");
+  search(city.value);
 }
 
 let dayElement = document.querySelector("#current-day");
@@ -165,14 +158,4 @@ timeElement.innerHTML = formatTime();
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSearch);
 
-let celsiusTemperature = null;
-
-let fahrenheitLinkElement = document.querySelector("#fahrenheit-Link");
-fahrenheitLinkElement.addEventListener("click", displayFahrenheitTemperature);
-
-
-let fahrenheitTemperature = null;
-
-let celsiusLinkElement = document.querySelector("#celsius-link");
-celsiusLinkElement.addEventListener("click", displayCelsiusTemperature);
 search("Toms River");

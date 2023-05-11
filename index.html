@@ -21,6 +21,7 @@
             placeholder="Enter a city"
             class="search-field"
             id="search-field-form"
+            autocomplete="off"
            />
            <input type="submit" value="Search" class="btn btn-info">
           <button><i class="fa-solid fa-location-dot"></i></button>
@@ -35,7 +36,7 @@
           <h1 id="city">Toms River</h1>
             <h2>
               <div class="temperature">
-                <span id="temperature">14</span> <a href="#" id="celsius-link" class="active">°C</a> |<a href="#" id="fahrenheit-Link">°F</a>
+                <span id="temperature">14°F</span>°F
               </div>
             </h2>
             <p id="weather-description">Partly Cloudly</p>
@@ -53,14 +54,14 @@
                 <ul class="current-weather">
                     <li class="weather-list">
                         <span id="feels-emoji" class="emoji"></span> Feels like: 
-                        <span id="feels">10</span>°C
+                        <span id="feels">10</span>°F
                     </li>
                     <li class="weather-list">    
-                        <span class="emoji">🎐 </span> Wind:
-                        <span id="wind-speed"></span> km/h
+                        <span class="emoji">🌳 </span> Wind:
+                        <span id="wind-speed"></span> mph
                     </li>
                     <li class="weather-list">
-                        <span class="emoji">🧖‍♀️ </span> Humidity: 
+                        <span class="emoji">🌊  </span> Humidity: 
                         <span id="humidity"></span> %
                     </li>
                 </ul>
