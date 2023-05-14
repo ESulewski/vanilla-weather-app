@@ -42,10 +42,9 @@ return ${time};
 }
 
 function forecastDate(timestamp){
-    let date = new Date(timestamp * 1000);
-  let day = date.getDay();
+  let date = new Date(timestamp * 1000);
   let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
+let day = date.gatDay();
   return days[day];
 }
 
@@ -55,7 +54,8 @@ function showForecast(response) {
 
   let forecastElement = document.querySelector("#forecast");
 
-  let forecastHTML = `<div class="row">`;
+  let forecastHTML = `<div class="row">`
+  
   forecast.forEach(function (forecastDay, index) {
     if (index < 6) {
       forecastHTML =
@@ -76,8 +76,8 @@ function showForecast(response) {
                 )}</span> °F
               </p>;
 
-              <p class="forecast-day">${forcastDate(forecastDay.time)}</p>;
-            </div>`;
+              <p class="forecast-day">${forecastDate(forecastDay.time)}</p>
+            </div>`
     };
   });
   forecastHTML = forecastHTML + `</div>`;
