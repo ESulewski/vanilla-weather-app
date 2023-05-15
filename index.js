@@ -103,13 +103,14 @@ function getForecast(city) {
   axios.get(apiUrl).then(showForecast);
 }
 
-function displayFeelsEmoji(response) {
+function displayFeelsEmoji(response){
   let feelsLikeEmoji = document.querySelector("#feels-emoji");
   let feelsLikeElement = document.querySelector("#feels");
-  feelsLikeElement.innerHTML = Math.round(response.data.temperature.feels_like);
-  if (feelsLikeElement < 10) {
-    feelsLikeEmoji.innerHTML = "☃";
-  } else if (feelsLikeElement >= 10 && feelsLikeElement < 25) {
+  feelsLikeElement = Math.round(response.data.temperature.feels_like);
+  
+  if (feelsLikeElement <= 65) {
+    feelsLikeEmoji.innerHTML = "❄"; 
+  } else if (feelsLikeElement > 65 && feelsLikeElement < 80) {
     feelsLikeEmoji.innerHTML = "🙂";
   } else {
     feelsLikeEmoji.innerHTML = "🏝";
@@ -141,6 +142,9 @@ function displayCityTemperature(response) {
   let humidityElement = document.querySelector("#humidity");
   humidityElement.innerHTML = response.data.temperature.humidity;
 
+  let feelsLikeElement = document.querySelector("#feels");
+  feelsLikeElement.innerHTML = Math.round(response.data.temperature.feels_like);
+  
   displayFeelsEmoji(response);
 
   getForecast(response.data.city);
@@ -169,5 +173,6 @@ timeElement.innerHTML = formatTime();
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSearch);
+
 
 search("Toms River");
